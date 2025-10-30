@@ -1,7 +1,11 @@
 package it.unibo.collections;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * Example class using {@link List} and {@link Map}.
@@ -12,6 +16,9 @@ public final class UseListsAndMaps {
     private UseListsAndMaps() {
     }
 
+    private static final int ZERO = 0;
+    private static final int LAST = 1999;
+
     /**
      * @param s
      *            unused
@@ -21,16 +28,26 @@ public final class UseListsAndMaps {
          * 1) Create a new ArrayList<Integer>, and populate it with the numbers
          * from 1000 (included) to 2000 (excluded).
          */
+        ArrayList<Integer> al= new ArrayList<Integer>();
+        for(int i = 1000; i <= 2000; i++){
+            l.add(i);
+        }
         /*
          * 2) Create a new LinkedList<Integer> and, in a single line of code
          * without using any looping construct (for, while), populate it with
          * the same contents of the list of point 1.
          */
+        LinkedList<Integer> ll = IntStream.rangeClosed(1000, 2000).boxed().collect(Collectors.toCollection(LinkedList::new));
         /*
          * 3) Using "set" and "get" and "size" methods, swap the first and last
          * element of the first list. You can not use any "magic number".
          * (Suggestion: use a temporary variable)
          */
+        var a = al.get(ZERO);
+        var b = al.get(LAST);
+        al.set(LAST, a);
+        al.set(ZERO,b);
+
         /*
          * 4) Using a single for-each, print the contents of the arraylist.
          */
