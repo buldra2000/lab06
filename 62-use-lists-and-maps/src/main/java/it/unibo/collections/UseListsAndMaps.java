@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -18,6 +19,7 @@ public final class UseListsAndMaps {
 
     private static final int ZERO = 0;
     private static final int LAST = 999;
+    private static final int ELEM = 100000;
 
     /**
      * @param s
@@ -61,12 +63,43 @@ public final class UseListsAndMaps {
          * using the previous lists. In order to measure times, use as example
          * TestPerformance.java.
          */
+        long timeArrayList = System.nanoTime();
+        for(int i = ZERO; i < ELEM; i++){
+            al.add(ZERO, i);
+        }
+        timeArrayList = System.nanoTime() - timeArrayList;
+
+        long timeLinkedList = System.nanoTime();
+        for(int i = ZERO; i < ELEM; i++){
+            ll.add(ZERO, i);
+        }
+        timeLinkedList = System.nanoTime() - timeLinkedList;
+
+        final var millisArrayList = TimeUnit.NANOSECONDS.toMillis(timeArrayList);
+        final var millisLinkedList = TimeUnit.NANOSECONDS.toMillis(timeLinkedList);
+        System.out.println(
+                "time required to add 100.000 elements as" +
+                "first element of the collection for both ArrayList "
+                + timeArrayList
+                + "ns ("
+                + millisArrayList
+                + "ms)"
+        );
+        System.out.println(
+                "time required to add 100.000 elements as" +
+                "first element of the collection for both LinkedList "
+                + timeLinkedList
+                + "ns ("
+                + millisLinkedList
+                + "ms)"
+        );
         /*
          * 6) Measure the performance of reading 1000 times an element whose
          * position is in the middle of the collection for both ArrayList and
          * LinkedList, using the collections of point 5. In order to measure
          * times, use as example TestPerformance.java.
          */
+
         /*
          * 7) Build a new Map that associates to each continent's name its
          * population:
