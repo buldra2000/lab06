@@ -17,7 +17,7 @@ public final class UseListsAndMaps {
     }
 
     private static final int ZERO = 0;
-    private static final int LAST = 1999;
+    private static final int LAST = 999;
 
     /**
      * @param s
@@ -29,7 +29,7 @@ public final class UseListsAndMaps {
          * from 1000 (included) to 2000 (excluded).
          */
         ArrayList<Integer> al= new ArrayList<Integer>();
-        for(int i = 1000; i <= 2000; i++){
+        for(int i = 1000; i < 2000; i++){
             al.add(i);
         }
         /*
@@ -51,6 +51,9 @@ public final class UseListsAndMaps {
         /*
          * 4) Using a single for-each, print the contents of the arraylist.
          */
+        for(Integer v : al){
+            System.out.println(v);
+        }
         /*
          * 5) Measure the performance of inserting new elements in the head of
          * the collection: measure the time required to add 100.000 elements as
