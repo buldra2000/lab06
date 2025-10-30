@@ -1,6 +1,7 @@
 package it.unibo.collections;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -79,7 +80,7 @@ public final class UseListsAndMaps {
         final var millisLinkedList = TimeUnit.NANOSECONDS.toMillis(timeLinkedList);
         System.out.println(
                 "time required to add 100.000 elements as" +
-                "first element of the collection for both ArrayList "
+                "first element of the collection in ArrayList "
                 + timeArrayList
                 + "ns ("
                 + millisArrayList
@@ -87,7 +88,7 @@ public final class UseListsAndMaps {
         );
         System.out.println(
                 "time required to add 100.000 elements as" +
-                "first element of the collection for both LinkedList "
+                "first element of the collection in LinkedList "
                 + timeLinkedList
                 + "ns ("
                 + millisLinkedList
@@ -99,6 +100,39 @@ public final class UseListsAndMaps {
          * LinkedList, using the collections of point 5. In order to measure
          * times, use as example TestPerformance.java.
          */
+        var middleArrayList = al.size()/2;
+        var middleLinkedList = ll.size()/2;
+
+        long timeArrayListr = System.nanoTime();
+        for(int i = ZERO; i<1000; i++){
+            al.get(middleArrayList);
+        }
+        timeArrayListr = System.nanoTime() - timeArrayListr;
+
+        long timeLinkedListr = System.nanoTime();
+        for(int i = ZERO; i<1000; i++){
+            ll.get(middleLinkedList);
+        }
+        timeLinkedListr = System.nanoTime() - timeLinkedListr;
+
+        final var millisArrayListr = TimeUnit.NANOSECONDS.toMillis(timeArrayListr);
+        final var millisLinkedListr = TimeUnit.NANOSECONDS.toMillis(timeLinkedListr);
+        System.out.println(
+                "time required to eading 1000 times an element whose\n" + //
+                "position is in the middle of the collection in ArrayList " +
+                + timeArrayListr
+                + "ns ("
+                + millisArrayListr
+                + "ms)"
+        );
+        System.out.println(
+                "time required to eading 1000 times an element whose\n" + //
+                "position is in the middle of the collection in LinkedList " +
+                + timeLinkedListr
+                + "ns ("
+                + millisLinkedListr
+                + "ms)"
+        );
 
         /*
          * 7) Build a new Map that associates to each continent's name its
@@ -116,8 +150,21 @@ public final class UseListsAndMaps {
          *
          * Oceania -> 38,304,000
          */
+        final Map<String, Long> map = new HashMap<>();
+        map.put("Africa", 1110635000L);
+        map.put("Americas", 972005000L);
+        map.put("Antartica", 0L);
+        map.put("Asia", 4298723000L);
+        map.put("Europe", 742452000L);
+        map.put("Oceania", 38304000L);
+
         /*
          * 8) Compute the population of the world
          */
+        long totalPopulation = 0;
+        for(long i : map.values()){
+            totalPopulation += i;
+        }
+        System.out.println("Sum of Africa, Americas, Antartica, Asia, Europoe, Oceania: " + totalPopulation);
     }
 }
