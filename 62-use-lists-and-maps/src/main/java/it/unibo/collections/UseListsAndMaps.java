@@ -30,7 +30,7 @@ public final class UseListsAndMaps {
          */
         ArrayList<Integer> al= new ArrayList<Integer>();
         for(int i = 1000; i <= 2000; i++){
-            l.add(i);
+            al.add(i);
         }
         /*
          * 2) Create a new LinkedList<Integer> and, in a single line of code
