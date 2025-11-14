@@ -38,7 +38,8 @@ public final class SocialNetworkUserImpl<U extends User> extends UserImpl implem
      *
      * think of what type of keys and values would best suit the requirements
      */
-
+    private final Map<String, Set<U>> followedUser;
+    
     /*
      * [CONSTRUCTORS]
      *
@@ -50,6 +51,7 @@ public final class SocialNetworkUserImpl<U extends User> extends UserImpl implem
      * - username
      * - age and every other necessary field
      */
+
     /**
      * Builds a user participating in a social network.
      *
@@ -64,12 +66,17 @@ public final class SocialNetworkUserImpl<U extends User> extends UserImpl implem
      *            application
      */
     public SocialNetworkUserImpl(final String name, final String surname, final String user, final int userAge) {
-        super(null, null, null, 0);
+        super(name,surname,user,userAge);
+        this.followedUser = new HashMap<>();
     }
 
     /*
      * 2) Define a further constructor where the age defaults to -1
      */
+    public SocialNetworkUserImpl(final String name, final String surname, final String user) {
+        super(name,surname,user,-1);
+        this.followedUser = new HashMap<>();
+    }
 
     /*
      * [METHODS]
@@ -78,7 +85,17 @@ public final class SocialNetworkUserImpl<U extends User> extends UserImpl implem
      */
     @Override
     public boolean addFollowedUser(final String circle, final U user) {
-        return false;
+        if(followedUser.containsKey(circle) == false){
+            HashSet<U> l = new HashSet<>();
+            followedUser.put(circle, l);
+            l.add(user);
+            return true;
+        }
+
+        else {
+            Set<U> set = followedUser.get(circle);
+            return set.add(user);
+        }
     }
 
     /**
@@ -88,11 +105,22 @@ public final class SocialNetworkUserImpl<U extends User> extends UserImpl implem
      */
     @Override
     public Collection<U> getFollowedUsersInGroup(final String groupName) {
-        return null;
+        Set<U> set = followedUser.get(groupName);
+        if(set == null){
+            return Collections.emptySet();
+        }
+        else {
+            return set;
+        }
+        
     }
 
     @Override
     public List<U> getFollowedUsers() {
-        return null;
+        List<U> allUser = new ArrayList<U>();
+        for (Set<U> group : followedUser.values()){
+            allUser.addAll(group);
+        }
+        return allUser;
     }
 }
